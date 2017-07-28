@@ -16,7 +16,7 @@ var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index")
  
-var url = process.env.DATABASEURL || "mongodb://GabrielBrum:mlabgab16@ds047622.mlab.com:47622/yp-node-c9app";
+var url = process.env.DATABASEURL || "mongodb://localhost/outsidecamp";
 mongoose.connect(url);
 
 app.use(bodyParser.urlencoded({extended: true}));
