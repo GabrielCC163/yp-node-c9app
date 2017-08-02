@@ -7,9 +7,12 @@
                 <label for="name">Name</label>
                 <input class="form-control" type="text" name="name" placeholder="name" required>
             </div>
-            <div class="form-group">
+            <div style="display: flex;" class="form-group">
                 <label for="image">Image</label>
-                <input class="form-control" type="text" name="image" placeholder="image url">
+                <input style="margin-right: -0.4em;" class="form-control" type="text" name="image" placeholder="image url">
+                <button style="color: #000;" type="button" class="btn-add btn btn-default btn-sm">
+                    <i class="fa fa-camera"></i>
+                </button>
             </div>
             <div class="form-group">
                 <label for="cost">Cost</label>
@@ -32,3 +35,9 @@
 </div>
 <% include ../partials/footer %>
 
+<script>
+$('.btn-add').click(function(){
+    $("[name='image']").val("https://source.unsplash.com/");
+    window.open('https://unsplash.com/search/campground', '_blank', "width=500,height=500");
+});
+</script>
