@@ -65,29 +65,34 @@ router.get("/:id", function(req, res){
 });
 
 // EDIT CAMPGROUND ROUTE
-router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res){
+router.get("/:id/edit", middleware.checkUserCampground, function(req, res){
     Campground.findById(req.params.id, function(err, foundCampground){
-        res.render("campgrounds/edit", {campground: foundCampground});
+        if(err){
+            console.log(err);
+        } else {
+            //render show template with that campground
+            res.render("campgrounds/edit", {campground: foundCampground});
+        }
     });
 });
 
 // UPDATE CAMPGROUND ROUTE
-router.put("/:id",middleware.checkCampgroundOwnership, function(req, res){
-    geocoder.geocode(req.body.location, function (err, data) {
-        var lat = data.results[0].geometry.location.lat;
-        var lng = data.results[0].geometry.location.lng;
-        var location = data.results[0].formatted_address;
-        var newData = {name: req.body.name, image: req.body.image, cost: req.body.cost, description: req.body.description, cost: req.body.cost, location: location, lat: lat, lng: lng};
-        Campground.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, campground){
-            if(err){
-                req.flash("error", err.message);
-                res.redirect("back");
-            } else {
-                req.flash("success","Successfully Updated!");
-                res.redirect("/campgrounds/" + campground._id);
-            }
-        });
+router.put("/:id", function(req, res){
+  geocoder.geocode(req.body.location, function (err, data) {
+    var lat = data.results[0].geometry.location.lat;
+    var lng = data.results[0].geometry.location.lng;
+    var location = data.results[0].formatted_address;
+    var newData = {name: req.body.name, image: req.body.image, description: req.body.description, cost: req.body.cost, location: location, lat: lat, lng: lng};
+    Campground.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, campground){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("back");
+        } else {
+            req.flash("success","Successfully Updated!");
+            res.redirect("/campgrounds/" + campground._id);
+        }
     });
+  });
 });
 
 // DESTROY CAMPGROUND ROUTE
