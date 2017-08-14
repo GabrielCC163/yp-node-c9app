@@ -76,7 +76,7 @@ router.get("/:id/edit", middleware.checkUserCampground, function(req, res){
     });
 });
 
-// UPDATE CAMPGROUNDs ROUTE
+// UPDATE CAMPGROUND ROUTE
 router.put("/:id", function(req, res){
   geocoder.geocode(req.body.location, function (err, data) {
     var lat = data.results[0].geometry.location.lat;
